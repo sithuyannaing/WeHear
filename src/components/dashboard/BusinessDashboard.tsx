@@ -64,7 +64,7 @@ export default function BusinessDashboard({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          businessId: import.meta.env.VITE_DEMO_BUSINESS_ID,
+          businessId: import.meta.env.VITE_DEMO_BUSINESS_ID || "demo",
           trainingId,
           staffId: "demo-staff",
           channel: "telegram",

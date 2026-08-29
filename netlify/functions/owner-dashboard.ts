@@ -1,6 +1,7 @@
 import { eq, desc } from "drizzle-orm";
 import { OpenAI } from "openai";
 import { getDb } from "../../src/db/index.js";
+import { dummyDashboardResponse } from "../../src/lib/dummyDashboard.js";
 import { feedbacks, feedbackAnalyses } from "../../src/db/schema.js";
 import type {
   FeedbackCategory,
@@ -427,16 +428,21 @@ async function generateRecommendation(
   }
 }
 
+function jsonDashboard(body: unknown, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 const handler = async (req: Request) => {
   try {
     const { searchParams } = new URL(req.url);
     const businessId = searchParams.get("businessId");
 
-    if (!businessId) {
-      return new Response(
-        JSON.stringify({ success: false, error: "businessId is required" }),
-        { status: 400, headers: { "Content-Type": "application/json" } }
-      );
+    if (!businessId || !process.env.DATABASE_URL) {
+      console.warn("owner-dashboard: serving dummy data (missing businessId or DATABASE_URL)");
+      return jsonDashboard(dummyDashboardResponse());
     }
 
     const db = getDb();
@@ -533,11 +539,8 @@ const handler = async (req: Request) => {
       headers: { "Content-Type": "application/json" },
     });
   } catch (err) {
-    console.error("DB error in owner-dashboard:", err);
-    return new Response(
-      JSON.stringify({ success: false, error: "Unable to fetch dashboard data." }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    console.error("owner-dashboard: falling back to dummy data:", err);
+    return jsonDashboard(dummyDashboardResponse());
   }
 };
 

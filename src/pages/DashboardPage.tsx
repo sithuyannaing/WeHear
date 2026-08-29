@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import BusinessDashboard from "../components/dashboard/BusinessDashboard";
+import { DUMMY_DASHBOARD } from "../lib/dummyDashboard";
 import type { OwnerDashboardData } from "../lib/types";
 
 type LoadState = "loading" | "success" | "error" | "empty";
@@ -15,8 +16,9 @@ export default function DashboardPage() {
     setErrorMessage("");
 
     try {
+      const businessId = import.meta.env.VITE_DEMO_BUSINESS_ID || "demo";
       const res = await fetch(
-        `/api/owner-dashboard?businessId=${encodeURIComponent(import.meta.env.VITE_DEMO_BUSINESS_ID)}`
+        `/api/owner-dashboard?businessId=${encodeURIComponent(businessId)}`
       );
       const result = await res.json();
 
@@ -29,8 +31,10 @@ export default function DashboardPage() {
       setUpdatedAt(new Date());
       setState(dashboard.feedbackCount === 0 ? "empty" : "success");
     } catch (err) {
-      setErrorMessage(err instanceof Error ? err.message : "Something went wrong");
-      setState("error");
+      console.warn("Dashboard API unavailable, using dummy data:", err);
+      setData(DUMMY_DASHBOARD);
+      setUpdatedAt(new Date());
+      setState("success");
     }
   }, []);
 
