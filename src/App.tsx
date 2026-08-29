@@ -1,15 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import FeedbackPage from "./pages/FeedbackPage";
+import CustomerFlow from "./components/customer/CustomerFlow";
 import DashboardPage from "./pages/DashboardPage";
-import PageNav from "./components/PageNav";
 import "./App.css";
 
 function App() {
   return (
     <div className="app">
-      <PageNav />
       <Routes>
-        <Route path="/" element={<FeedbackPage />} />
+        <Route path="/" element={<CustomerFlow />} />
         <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
     </div>

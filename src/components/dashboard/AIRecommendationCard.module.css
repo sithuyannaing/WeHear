@@ -1,0 +1,53 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: var(--text-secondary);
+  color: var(--color-text-muted);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--text-card-title);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.why {
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.whyLabel {
+  font-size: var(--text-label);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.whyText {
+  margin: 0;
+  font-size: var(--text-body);
+  color: var(--color-text);
+}
+
+.goal {
+  margin: 0;
+  font-size: var(--text-secondary);
+  color: var(--color-text-muted);
+}
+
+.error {
+  margin: 0;
+  font-size: var(--text-secondary);
+  color: var(--color-warning);
+}

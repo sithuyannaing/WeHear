@@ -67,8 +67,8 @@ export default async (req: Request) => {
     if (typeof comment !== "string") {
       return json({ success: false, error: "comment must be a string" }, 400);
     }
-    if (comment.length > 1000) {
-      return json({ success: false, error: "comment must be 1000 characters or less" }, 400);
+    if (comment.length > 2000) {
+      return json({ success: false, error: "comment must be 2000 characters or less" }, 400);
     }
   }
 
